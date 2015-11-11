@@ -1,0 +1,39 @@
+STACK:
+  name: EPSCentOS65
+  network:
+    private_ip: 192.168.56.1
+  puppet:
+    host: puppet.qa.sugarcrm.net
+    node: stack.sjc.sugarcrm.pvt
+    ip: 10.25.10.60
+    options: "--configtimeout=60m"
+  box:
+    name: SugarCRM/CentOS65/40GBv1.1
+    url: http://sugar-ci.s3.amazonaws.com/vagrant-boxes/SugarCRM-CentOS65-40GBv1.1.0.box
+  hostname:
+    domain: stack.sjc.sugarcrm.pvt
+    prefix: [php54-db2-, mts-, php53oracle, php54oracle12c, php54-, php55-, php56-, phpenv-, qa-php53-, qa-php54-]
+
+DEFAULT_STACK:
+  stacks: [db2, mts, oracle, oracle12c, php54, php55, php56, phpenv, qa-php53, qa-php54, ubuntu-driver]
+  selected: 5
+  cpus: 2
+  ssd: false
+  memory: 2048
+  video_memory: 8
+  forward_agent: false
+  forward_port: false
+  forwarded_port:
+    80: 8080
+    3333: 8333
+    3334: 8334
+    9200: 8920
+    9000: 9900
+    9191: 9191
+    1521: 1521
+  puppet:
+    options: "--verbose"
+  share:
+    -
+     source: "~/www"
+     target: "/var/www"
