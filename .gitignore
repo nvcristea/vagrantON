@@ -1,0 +1,4 @@
+# OS and Dev env
+.DS_Store
+.vagrant
+.idea
