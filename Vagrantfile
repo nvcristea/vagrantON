@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   # Folder sharing
-  config.vm.synced_folder "./stacks/#{CONF['stacks'][STACK_ID]}/puppet_ssl", "/vagrant/puppet_ssl"
+  config.vm.synced_folder "#{STACK['path']}#{CONF['stacks'][STACK_ID]}/puppet_ssl", "/vagrant/puppet_ssl"
   CONF['share'].each do |share|
     share_group = 'vagrant'
     share_group = 'apache' if share['target'] =~ /www\/html/ and !Vagrant::Util::Platform.windows?
@@ -51,13 +51,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Provision
   config.vm.provision :shell, :path => "core/puppet.sh", :args => ["#{STACK['puppet']['ip']}", "#{STACK['puppet']['host']}"]
-
   config.vm.provision "puppet_server" do |puppet|
     puppet.puppet_server = "#{STACK['puppet']['host']}"
     puppet.puppet_node = "#{STACK['puppet']['node']}"
     puppet.options = "#{STACK['puppet']['options']}"
   end
-
+  if File.exists?('core/provision.sh')
+    config.vm.provision :shell, :path => "core/provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{STACK['network']['private_ip']}"]
+  end
 
   # Additional
   ## Cachier
@@ -101,7 +102,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     web.vm.hostname="#{STACK['hostname']}"
     web.vm.network :private_network, ip: "#{STACK['network']['private_ip']}"
     if File.exists?('provision.sh')
-      web.vm.provision :shell, :path => "provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}"]
+      web.vm.provision :shell, :path => "provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{STACK['network']['private_ip']}"]
     end
 
     end

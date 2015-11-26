@@ -10,7 +10,7 @@ if File.file?(core_conf_file) then
     STACK = YMLCoreConf['STACK']
 end
 
-if ARGV[1]
+if ARGV[1] && CONF['stacks'].include?(ARGV[1])
     STACK_ID = CONF['stacks'].index(ARGV[1])
 elsif ENV['ACTIVE_STACK']
     STACK_ID = CONF['stacks'].index(ENV['ACTIVE_STACK'])
@@ -18,7 +18,7 @@ end
 
 if File.file?(conf_file) then
     YMLConf = YAML.load_file(conf_file)
-    STACK_ID = YMLConf['ACTIVE_STACK'] if !YMLConf['ACTIVE_STACK'].nil? unless defined? STACK_ID
+    STACK_ID = CONF['stacks'].index(YMLConf['ACTIVE_STACK']) if !YMLConf['ACTIVE_STACK'].nil? unless defined? STACK_ID
     if YMLConf['STACKS'][CONF['stacks'][STACK_ID]]
         YMLConf['STACKS'][CONF['stacks'][STACK_ID]].each do |key, item|
             CONF[key.downcase] = item

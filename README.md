@@ -1,38 +1,32 @@
-# SugarCRM vagrantON Stacks
+# SugarCRM VagrantON Stacks
 
-SugarCRM vagrantON Stacks it's built on top and dependent by SugarCRM Engineering Stacks.
-It's main advantage is that allow developers to start and configure any stack from the same folder while keeping them custom configurations on them local environment. 
-Also support simultaneous running of multiple stacks and can control them directly from CLI (ex: `vagrant up php55`) 
+SugarCRM VagrantON Stacks it's built on top and dependent by [SugarCRM Engineering Stacks](https://github.com/sugarcrm/stacks).
 
-## Install 
+## Advantages
+
+VagrantON provides flexibility on top of VM Stacks such as:
+ * fast and easy configurable, including shared folders and forwarded ports;
+ * can run and control multiples stacks on the same time (ex: `vagrant up php55`);
+ * private network ip as secondary adapter;
+ * integrated with PHPStorm;
+ * easy to use and control each stack trough local config.yml file;
+ 
+
+## Install
 
 ### Easy steps
 
 ```bash
-   git clone git@github.com:svnvcristea/vagrantON.git
-   cd vagrantON
-   git submodule init
-   git submodule update
-   cp _examples/config.yml ./
-   nano config.yml
-   vagrant up php55
+git clone git@github.com:svnvcristea/vagrantON.git
+cd vagrantON
+git submodule init
+git submodule update
+cp _examples/config.yml ./
+nano config.yml
+vagrant up
 ```
 
-After cloning the repo you can also copy _examples/config.yml on it's parent and change them accordingly with your needs.
-
-## Configure vagrantON
-
-It's very easy con configure it by changing values in the config.yml
-
-Supported Stacks are on the list 
-```yaml
-stacks: [db2, mts, oracle, oracle12c, php54, php55, php56, phpenv, qa-php53, qa-php54, ubuntu-driver]
-```
-So ACTIVE_STACK = 3 will start the 'oracle12c' stack by default. 
-In case you will send the name of the stack from cli, the ACTIVE_STACK will be overwritten with the stack sent.
-So `vagrant up php55` will start the 'php55' stack.
-
-If you will start without your own config.yml in place the default stack will be used:
+Without your own config.yml in place will start the default stack:
 
 ```yaml
 DEFAULT_STACK:
@@ -54,19 +48,48 @@ DEFAULT_STACK:
     options: "--verbose"
   share:
     -
-     source: "~/www"
-     target: "/var/www"
+     source: "~/stack_php54/log"
+     target: "/var/log/httpd"
 ```
 
+## Configure VagrantON
 
-## Starting 1st Stack
+```bash
+   git clone https://github.com/svnvcristea/stacks.git
+   cd stacks/vagrant-on
+   cp _examples/config.yml ./
+   nano config.yml
+```
+
+It's very easy con configure it by changing values in the stacks/vagrant-on/config.yml
+
+## Stacks
+
+Supported Stacks are:
+```yaml
+stacks: [db2, mts, oracle, oracle12c, php54, php55, php56, phpenv, qa-php53, qa-php54, ubuntu-driver]
+```
+So, `vagrant up` with ACTIVE_STACK = php54 in config.yml will start the 'php54' stack by default. 
+In case you will send the name of the stack from cli, the ACTIVE_STACK will be overwritten with the stack sent.
+This mean that `vagrant up oracle12c` will start the 'oracle12c' stack.
+
+
+### 1st Stack ON
 
 When you want to start the box, just type `vagrant up` from this directory in a terminal window, it will load the base box into VirtualBox and boot it.  Once it's booted, it will run the provision scripts, downloading everything that is needed for it to run.
 
 Once the box has been provisioned, you can access it by typing in `vagrant ssh` from the same terminal window.  It will log you in as the vagrant user, which has unrestricted sudo access.
 
-Detail about the box can be found in the main [README](../../../../sugarcrm/stacks/blob/master/README.md) file for the stacks as to what is installed and how it configured.
+Detail about the box can be found in the main [README](../README.md#installed-software) file for the stacks as to what is installed and how it configured.
 
-## Starting Additional Stack
+### Additional Stack ON
 
 In order to start an additional VM stack just change the value of ACTIVE_STACK from your conf.yml and `vagrant up`
+
+## PHPStorm integration
+
+From PHPStorm Menu `File -> Settings -> Tools -> Vagrant` :
+ * set at `Instance folder:` your folder `~/stacks/vagrant-on`
+ * add at `Environment variables` a new variable:
+   * `Name` : `ACTIVE_STACK` and 
+   * `Value` : `php55` (or the name of the stack) 

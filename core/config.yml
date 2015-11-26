@@ -1,7 +1,8 @@
 STACK:
-  name: EPSCentOS65
+  name: PSCentOS65
   network:
     private_ip: 192.168.56.1
+  path: ./stacks/
   puppet:
     host: puppet.qa.sugarcrm.net
     node: stack.sjc.sugarcrm.pvt
@@ -16,7 +17,7 @@ STACK:
 
 DEFAULT_STACK:
   stacks: [db2, mts, oracle, oracle12c, php54, php55, php56, phpenv, qa-php53, qa-php54, ubuntu-driver]
-  selected: 5
+  selected: php54
   cpus: 2
   ssd: false
   memory: 2048

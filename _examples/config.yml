@@ -1,11 +1,21 @@
-#DEFAULT_STACK: [db2, mts, oracle, oracle12c, php54, php55, php56, phpenv, qa-php53, qa-php54, ubuntu-driver]
-ACTIVE_STACK: 5
+# STACKS: [db2, mts, oracle, oracle12c, php54, php55, php56, phpenv, qa-php53, qa-php54, ubuntu-driver]
+ACTIVE_STACK: php54
 STACKS:
+  php54:
+    cpus: 2
+    ssd: false
+    memory: 2048
+    share:
+      -
+       source: "~/stack_php54/log"
+       target: "/var/log/httpd"
+      -
+       source: "~/stack_php54/conf.d"
+       target: "/etc/httpd/conf.d"
   oracle12c:
     cpus: 2
-    ssd: true
+    ssd: false
     memory: 3072
-    video_memory: 8
     forward_agent: true
     forward_port: true
     forwarded_port:
@@ -20,8 +30,11 @@ STACKS:
       options: "--verbose"
     share:
       -
-       source: "~/www_oracle"
-       target: "/var/www"
+       source: "~/stack_oracle12c/log"
+       target: "/var/log/httpd"
+      -
+       source: "~/stack_oracle12c/conf.d"
+       target: "/etc/httpd/conf.d"
   php55:
     cpus: 2
     ssd: true
@@ -33,5 +46,8 @@ STACKS:
       80: 8580
     share:
       -
-       source: "~/www_php55"
-       target: "/var/www"
+       source: "~/stack_php55/log"
+       target: "/var/log/httpd"
+      -
+       source: "~/stack_php55/conf.d"
+       target: "/etc/httpd/conf.d"
