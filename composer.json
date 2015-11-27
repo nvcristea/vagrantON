@@ -1,0 +1,29 @@
+{
+  "name": "svnvcristea/vagrantON",
+  "type": "library",
+  "description": "vagrantON - EPS CentOS stacks",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Nicolae V. Cristea",
+      "email": "ncristea@sugarcrm.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "scripts": {
+    "post-update-cmd": [
+      "git -C vendor/svnvcristea/vagrantON submodule init",
+      "git -C vendor/svnvcristea/vagrantON submodule update"
+    ],
+    "post-install-cmd": [
+      "git -C vendor/svnvcristea/vagrantON submodule init",
+      "git -C vendor/svnvcristea/vagrantON submodule update"
+    ]
+  },
+  "repositories" : [
+    {
+      "type" : "git",
+      "url" : "https://github.com/svnvcristea/vagrantON"
+    }
+  ]
+}
