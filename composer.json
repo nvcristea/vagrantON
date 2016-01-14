@@ -1,7 +1,7 @@
 {
-  "name": "svnvcristea/vagrantON",
+  "name": "PSTools/vagrantON",
   "type": "library",
-  "description": "vagrantON - EPS CentOS stacks",
+  "description": "vagrantON - PSTools CentOS stacks",
   "license": "proprietary",
   "authors": [
     {
@@ -10,16 +10,6 @@
     }
   ],
   "minimum-stability": "stable",
-  "scripts": {
-    "post-update-cmd": [
-      "git -C vendor/svnvcristea/vagrantON submodule init",
-      "git -C vendor/svnvcristea/vagrantON submodule update"
-    ],
-    "post-install-cmd": [
-      "git -C vendor/svnvcristea/vagrantON submodule init",
-      "git -C vendor/svnvcristea/vagrantON submodule update"
-    ]
-  },
   "repositories" : [
     {
       "type" : "git",

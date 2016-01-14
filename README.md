@@ -5,6 +5,7 @@ SugarCRM VagrantON Stacks it's built on top and dependent by [SugarCRM Engineeri
 ## Advantages
 
 VagrantON provides flexibility on top of VM Stacks such as:
+
  * fast and easy configurable, including shared folders and forwarded ports;
  * can run and control multiples stacks on the same time (ex: `vagrant up php55`);
  * private network ip as secondary adapter;
@@ -19,8 +20,10 @@ VagrantON provides flexibility on top of VM Stacks such as:
 ```bash
 git clone git@github.com:svnvcristea/vagrantON.git
 cd vagrantON
-git submodule init
-git submodule update
+mkdir stacks
+curl https://api.github.com/repos/sugarcrm/stacks/tarball/master -s -L -u gituser:gitpassword > stacks/stacks.tar.gz
+tar -xzf stacks/stacks.tar.gz -C stacks --strip 1
+rm stacks/stacks.tar.gz
 cp _examples/config.yml ./
 nano config.yml
 vagrant up
