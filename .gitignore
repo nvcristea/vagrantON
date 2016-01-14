@@ -6,5 +6,5 @@
 # Project related files
 puppet_ssl
 stacks
-/config.yml
+/config/_private.yml
 /provision.sh

@@ -1,25 +1,25 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 require 'yaml'
-require './core/config.rb'
+require './app/config.rb'
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
-puts "VagrantON: #{CONF['stacks'][STACK_ID]}"
-puts "#{STACK['network']['private_ip']}"
+puts "VagrantON: #{CONF['name']}"
+puts "#{CONF['network']['private_ip']}"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Setup BOX
-  config.vm.box = "#{STACK['box']['name']}"
-  config.vm.box_url = "#{STACK['box']['url']}"
-  config.vm.hostname = "#{STACK['hostname']}"
+  config.vm.box = "#{CONF['box']['name']}"
+  config.vm.box_url = "#{CONF['box']['url']}"
+  config.vm.hostname = "#{CONF['hostname']}"
   config.ssh.forward_agent = "#{CONF['forward_agent']}"
 
 
   # Provider
   config.vm.provider :virtualbox do |vb|
-    vb.name = "#{STACK['name']}"
+    vb.name = "#{CONF['name']}"
     vb.gui = false
     vb.customize ["modifyvm", :id, "--memory", "#{CONF['memory']}"]
     vb.customize ["modifyvm", :id, "--cpus", "#{CONF['cpus']}"]
@@ -41,7 +41,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   # Folder sharing
-  config.vm.synced_folder "#{STACK['path']}#{CONF['stacks'][STACK_ID]}/puppet_ssl", "/vagrant/puppet_ssl"
+  config.vm.synced_folder "#{CONF['path']['stacks']}#{CONF['stacks'][STACK_ID]}/puppet_ssl", "/vagrant/puppet_ssl"
   CONF['share'].each do |share|
     share_group = 'vagrant'
     share_group = 'apache' if share['target'] =~ /www\/html/ and !Vagrant::Util::Platform.windows?
@@ -50,14 +50,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   # Provision
-  config.vm.provision :shell, :path => "core/puppet.sh", :args => ["#{STACK['puppet']['ip']}", "#{STACK['puppet']['host']}"]
+  config.vm.provision :shell, :path => "#{CONF['path']['provision']}puppet.sh", :args => ["#{CONF['puppet']['ip']}", "#{CONF['puppet']['host']}"]
   config.vm.provision "puppet_server" do |puppet|
-    puppet.puppet_server = "#{STACK['puppet']['host']}"
-    puppet.puppet_node = "#{STACK['puppet']['node']}"
-    puppet.options = "#{STACK['puppet']['options']}"
+    puppet.puppet_server = "#{CONF['puppet']['host']}"
+    puppet.puppet_node = "#{CONF['puppet']['node']}"
+    puppet.options = "#{CONF['puppet']['options']}"
   end
-  if File.exists?('core/provision.sh')
-    config.vm.provision :shell, :path => "core/provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{STACK['network']['private_ip']}"]
+  if File.exists?("#{CONF['path']['provision']}provision.sh")
+    config.vm.provision :shell, :path => "#{CONF['path']['provision']}provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{CONF['network']['private_ip']}"]
   end
 
   # Additional
@@ -99,10 +99,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   ## Defining Multiple Machines
   config.vm.define "#{CONF['stacks'][STACK_ID]}" do |web|
 
-    web.vm.hostname="#{STACK['hostname']}"
-    web.vm.network :private_network, ip: "#{STACK['network']['private_ip']}"
-    if File.exists?('provision.sh')
-      web.vm.provision :shell, :path => "provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{STACK['network']['private_ip']}"]
+    web.vm.hostname="#{CONF['hostname']}"
+    web.vm.network :private_network, ip: "#{CONF['network']['private_ip']}"
+    # Private Provision
+    if File.exists?("#{CONF['path_provision']}provision.sh")
+      web.vm.provision :shell, :path => "#{CONF['path_provision']}provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{CONF['network']['private_ip']}", "#{CONF['forward_port']}"]
     end
 
     end

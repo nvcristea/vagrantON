@@ -1,0 +1,37 @@
+# This file is a "template" of what your _private.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# STACKS: [db2, mts, oracle, oracle12c, php54, php55, php56, phpenv, qa-php53, qa-php54, ubuntu-driver]
+
+ACTIVE_STACK: php54
+STACKS:
+  php54:
+    cpus: 2
+    ssd: false
+    memory: 2048
+    share:
+      -
+        source: "~/von_stacks/log/php54"
+        target: "/var/log/httpd"
+      -
+        source: "~/von_stacks/conf.d/php54"
+        target: "/etc/httpd/conf.d"
+  oracle12c:
+    cpus: 2
+    ssd: false
+    memory: 3072
+    forward_port: true
+    forwarded_port:
+      80: 8080
+      3333: 8333
+      3334: 8334
+      9200: 8920
+      9000: 9900
+      9191: 9191
+      1521: 1521
+    share:
+      -
+        source: "~/von_stacks/log/oracle12c"
+        target: "/var/log/httpd"
+      -
+        source: "~/von_stacks/conf.d/oracle12c"
+        target: "/etc/httpd/conf.d"
