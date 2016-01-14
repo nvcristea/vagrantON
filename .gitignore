@@ -2,3 +2,8 @@
 .DS_Store
 .vagrant
 .idea
+
+# Project related files
+puppet_ssl
+/config.yml
+/provision.sh
