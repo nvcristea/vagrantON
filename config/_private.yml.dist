@@ -12,9 +12,6 @@ STACKS:
       -
         source: "~/von_stacks/log/php54"
         target: "/var/log/httpd"
-      -
-        source: "~/von_stacks/conf.d/php54"
-        target: "/etc/httpd/conf.d"
   oracle12c:
     cpus: 2
     ssd: false
@@ -32,6 +29,3 @@ STACKS:
       -
         source: "~/von_stacks/log/oracle12c"
         target: "/var/log/httpd"
-      -
-        source: "~/von_stacks/conf.d/oracle12c"
-        target: "/etc/httpd/conf.d"
