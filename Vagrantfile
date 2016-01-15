@@ -57,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.options = "#{CONF['puppet']['options']}"
   end
   if File.exists?("#{CONF['path']['provision']}provision.sh")
-    config.vm.provision :shell, :path => "#{CONF['path']['provision']}provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{CONF['network']['private_ip']}"]
+    config.vm.provision :shell, :path => "#{CONF['path']['provision']}provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{CONF['network']['private_ip']}", "#{CONF['forward_port']}"]
   end
 
   # Additional

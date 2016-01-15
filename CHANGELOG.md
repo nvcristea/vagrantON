@@ -6,6 +6,7 @@ CHANGELOG
  * Removed stacks submodule
  * Improved file structure and documentation
  * SetUp file
+ * overwrite and config Deployer
 
 0.1.0
 -----

@@ -55,3 +55,9 @@ From PHPStorm Menu `File -> Settings -> Tools -> Vagrant` :
  * add at `Environment variables` a new variable:
    * `Name` : `ACTIVE_STACK` and 
    * `Value` : `php55` (or the name of the stack) 
+
+## Have a look over:
+
+* [sugarBash Helper](https://github.com/svnvcristea/sugarBash)
+* [SugarCRM CodeSniffer](https://github.com/svnvcristea/SugarCRMCodeSniffer)
+* [PSBook](https://github.com/svnvcristea/PSBook)
