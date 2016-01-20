@@ -88,9 +88,18 @@ EOL
     grunt init
 }
 
+function getElasticsearchHQ() {
+    cd /usr/share/elasticsearch/plugins
+    wget https://github.com/royrusso/elasticsearch-HQ/archive/master.zip
+    unzip master
+    mv elasticsearch-HQ-master HQ
+    rm master
+}
+
 echo "Stack provision: ${1}"
 installTools
 nfsExports
 setSugarBashAlias
 resetDeployer $@
+getElasticsearchHQ
 statuses $1 $2

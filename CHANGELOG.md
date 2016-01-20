@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+0.3.0
+-----
+ * Elasticsearch HQ plugin
+
 0.2.0
 -----
  * Removed stacks submodule
