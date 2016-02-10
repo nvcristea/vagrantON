@@ -4,6 +4,7 @@ CHANGELOG
 0.3.0
 -----
  * Elasticsearch HQ plugin
+ * compatibility with Deployer >= v0.13.0
 
 0.2.0
 -----
