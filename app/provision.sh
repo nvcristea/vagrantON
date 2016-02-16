@@ -35,12 +35,9 @@ function resetDeployer() {
     npm install -g grunt-cli grunt bower
     cd /var/www/html/deployer/
     git init
-    git remote add origin git@github.com:svnvcristea/stack-deployer.git
-    git remote add upstream git@github.com:sugarcrm/stack-deployer.git
+    git remote add origin git@github.com:sugarcrm/stack-deployer.git
     git fetch
-    git checkout -b develop
-    git checkout develop
-    git reset --hard origin/develop
+    git reset --hard origin/master
     bower install
     npm install
     npm install grunt-cli grunt
@@ -50,6 +47,7 @@ function resetDeployer() {
 
 function configDeployer() {
 
+    # $3 = forward_port
     if [ $3 == "true" ]; then
         cat > _config.json <<EOL
 {
@@ -60,9 +58,16 @@ function configDeployer() {
     "username": "vagrant"
   },
   "port": {
-    "socket_io": "8333",
-    "node_app": "8334",
-    "web_app": "8080"
+    "server":{
+      "socket_io": "3333",
+      "node_app": "3334",
+      "web_app": "80"
+    },
+    "client":{
+      "socket_io": "8333",
+      "node_app": "8334",
+      "web_app": "8080"
+    }
   }
 }
 
@@ -77,9 +82,16 @@ EOL
     "username": "vagrant"
   },
   "port": {
-    "socket_io": "3333",
-    "node_app": "3334",
-    "web_app": "80"
+    "server":{
+      "socket_io": "3333",
+      "node_app": "3334",
+      "web_app": "80"
+    },
+    "client":{
+      "socket_io": "3333",
+      "node_app": "3334",
+      "web_app": "80"
+    }
   }
 }
 
@@ -88,9 +100,18 @@ EOL
     grunt init
 }
 
+function getElasticsearchHQ() {
+    cd /usr/share/elasticsearch/plugins
+    wget https://github.com/royrusso/elasticsearch-HQ/archive/master.zip
+    unzip master
+    mv elasticsearch-HQ-master HQ
+    rm master
+}
+
 echo "Stack provision: ${1}"
 installTools
 nfsExports
 setSugarBashAlias
 resetDeployer $@
+getElasticsearchHQ
 statuses $1 $2
