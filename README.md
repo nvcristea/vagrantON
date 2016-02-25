@@ -51,10 +51,19 @@ or change the value of ACTIVE_STACK from your [`config/_private.yml`](config/_pr
 ## PHPStorm integration
 
 From PHPStorm Menu `File -> Settings -> Tools -> Vagrant` :
+
  * set at `Instance folder:` your folder `~/vagrantOn`
  * add at `Environment variables` a new variable:
    * `Name` : `ACTIVE_STACK` and 
    * `Value` : `php55` (or the name of the stack) 
+
+## Update Stacks
+
+In order to get last stacks:
+
+```bash
+bash app/setup.sh update
+```
 
 ## Have a look over:
 

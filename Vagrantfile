@@ -50,14 +50,27 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   # Provision
+  ## shell puppet
   config.vm.provision :shell, :path => "#{CONF['path']['provision']}puppet.sh", :args => ["#{CONF['puppet']['ip']}", "#{CONF['puppet']['host']}"]
+  ## puppet
   config.vm.provision "puppet_server" do |puppet|
     puppet.puppet_server = "#{CONF['puppet']['host']}"
     puppet.puppet_node = "#{CONF['puppet']['node']}"
     puppet.options = "#{CONF['puppet']['options']}"
   end
-  if File.exists?("#{CONF['path']['provision']}provision.sh")
-    config.vm.provision :shell, :path => "#{CONF['path']['provision']}provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{CONF['network']['private_ip']}", "#{CONF['forward_port']}"]
+  ## docker
+  if CONF['voodoo_cleanup']
+    config.vm.provision "docker",
+      images: ["#{CONF['docker']['images']}"]
+    config.vm.provision "docker" do |d|
+      d.run "#{CONF['docker']['images']}", args: "-d -p 5000:5000 \
+        --net=host \
+        -v /var/www/html:/var/www/html"
+    end
+  end
+  ## shell PS
+  if File.exists?("#{CONF['path']['provision']}ps_provision.sh") and CONF['ps_provision']
+    config.vm.provision :shell, :path => "#{CONF['path']['provision']}ps_provision.sh", :args => ["#{CONF['stacks'][STACK_ID]}", "#{CONF['network']['private_ip']}", "#{CONF['forward_port']}"]
   end
 
   # Additional
