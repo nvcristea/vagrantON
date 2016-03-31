@@ -1,4 +1,13 @@
-# SugarCRM VagrantON Stacks
+SugarCRM VagrantON Stacks
+=========================
+
+## Deprecated!
+
+As the source code was integrated with [SugarCRM Engineering Stacks](https://github.com/sugarcrm/stacks), this repository will no longer be maintained. 
+
+Use the [SugarCRM VagrantON Stacks](https://github.com/sugarcrm/stacks/tree/master/vagrant-on).
+
+## About
 
 SugarCRM VagrantON Stacks it's built on top and dependent by [SugarCRM Engineering Stacks](https://github.com/sugarcrm/stacks).
 
