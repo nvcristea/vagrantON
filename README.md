@@ -1,4 +1,13 @@
-# SugarCRM VagrantON Stacks
+SugarCRM VagrantON Stacks
+=========================
+
+## Deprecated!
+
+As the source code was integrated with [SugarCRM Engineering Stacks](https://github.com/sugarcrm/stacks), this repository will no longer be maintained. 
+
+Use the [SugarCRM VagrantON Stacks](https://github.com/sugarcrm/stacks/tree/master/vagrant-on).
+
+## About
 
 SugarCRM VagrantON Stacks it's built on top and dependent by [SugarCRM Engineering Stacks](https://github.com/sugarcrm/stacks).
 
@@ -51,10 +60,19 @@ or change the value of ACTIVE_STACK from your [`config/_private.yml`](config/_pr
 ## PHPStorm integration
 
 From PHPStorm Menu `File -> Settings -> Tools -> Vagrant` :
+
  * set at `Instance folder:` your folder `~/vagrantOn`
  * add at `Environment variables` a new variable:
    * `Name` : `ACTIVE_STACK` and 
    * `Value` : `php55` (or the name of the stack) 
+
+## Update Stacks
+
+In order to get last stacks:
+
+```bash
+bash app/setup.sh update
+```
 
 ## Have a look over:
 

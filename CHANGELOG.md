@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+0.4.0
+-----
+ * update stacks
+ * deprecated
+
 0.3.0
 -----
  * Elasticsearch HQ plugin

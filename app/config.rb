@@ -39,7 +39,7 @@ if CONF['CONF_FILE'] and File.file?(CONF_PATH + CONF['CONF_FILE']) then
     end
 end
 
-STACK_ID = CONF['active'] unless defined? STACK_ID
+STACK_ID = CONF['stacks'].index(CONF['active']) unless defined? STACK_ID
 
 CONF['name'] << "_" + CONF['stacks'][STACK_ID]
 CONF['network']['private_ip'] << "#{STACK_ID}"
